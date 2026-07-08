@@ -65,7 +65,7 @@ That's it. VPNX is now running:
 | Method | Command |
 |--------|---------|
 | npm | `npm install -g @mocasus/vpnx && vpnx your-secret` |
-| pip | `pip install vpnx && vpnx your-secret` |
+| pip | `pip install vpnx-cli && vpnx your-secret` |
 | Docker Compose | `git clone https://github.com/mocasus/vpnx && cd vpnx && docker compose up -d` |
 
 The CLI wrapper generates a token, pulls the image, and starts the container with the right flags.
@@ -161,7 +161,7 @@ docker run -d --name vpnx \
 | Metode | Perintah |
 |--------|----------|
 | npm | `npm install -g @mocasus/vpnx && vpnx rahasia-anda` |
-| pip | `pip install vpnx && vpnx rahasia-anda` |
+| pip | `pip install vpnx-cli && vpnx rahasia-anda` |
 | Docker Compose | `git clone https://github.com/mocasus/vpnx && cd vpnx && docker compose up -d` |
 
 ### API
