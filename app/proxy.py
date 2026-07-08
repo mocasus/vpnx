@@ -33,4 +33,4 @@ class ProxyManager:
                     f.write(f"external: {iface}\n")
                 else:
                     f.write(line)
-        subprocess.run(["supervisorctl", "restart", "danted"], capture_output=True)
+        subprocess.run(["pkill", "danted"], capture_output=True)
