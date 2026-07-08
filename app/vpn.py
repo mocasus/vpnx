@@ -403,10 +403,18 @@ class VPNManager:
         except Exception:
             return False
 
-    async def watchdog(self, interval=30):
-        """Background task: reconnect if VPN tunnel drops."""
+    async def watchdog(self, interval=30, rotate_interval=0):
+        """Background task: reconnect on drop + auto-rotate if configured.
+
+        Args:
+            interval: Health check interval in seconds.
+            rotate_interval: Auto-rotate interval in seconds (0 = disabled).
+        """
+        last_rotate = time.time()
         while True:
             await asyncio.sleep(interval)
+
+            # Health check — reconnect if tunnel dropped
             if self.connected and not self.is_tunnel_alive():
                 log.warning("VPN tunnel dropped — attempting reconnect")
                 self.connected = False
@@ -416,3 +424,17 @@ class VPNManager:
                     log.info(f"Watchdog reconnected to {result['server']}")
                 else:
                     log.error("Watchdog reconnect failed")
+                last_rotate = time.time()
+                continue
+
+            # Auto-rotate
+            if rotate_interval > 0 and self.connected:
+                elapsed = time.time() - last_rotate
+                if elapsed >= rotate_interval:
+                    old = self.current["hostname"] if self.current else "?"
+                    result = await self.rotate()
+                    if result.get("status") == "connected":
+                        log.info(f"Auto-rotate: {old} → {result['server']} ({result['country']})")
+                    else:
+                        log.warning(f"Auto-rotate failed — keeping {old}")
+                    last_rotate = time.time()
