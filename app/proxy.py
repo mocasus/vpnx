@@ -25,12 +25,22 @@ class ProxyManager:
     def set_external(self, iface):
         if not os.path.exists(DANTE_CONF):
             return
+        try:
+            out = subprocess.check_output(
+                ["ip", "-4", "addr", "show", iface],
+                stderr=subprocess.DEVNULL
+            ).decode()
+            import re
+            m = re.search(r"inet (\d+\.\d+\.\d+\.\d+)", out)
+            ext = m.group(1) if m else iface
+        except:
+            ext = iface
         with open(DANTE_CONF) as f:
             lines = f.readlines()
         with open(DANTE_CONF, "w") as f:
             for line in lines:
                 if line.strip().startswith("external:"):
-                    f.write(f"external: {iface}\n")
+                    f.write(f"external: {ext}\n")
                 else:
                     f.write(line)
         subprocess.run(["pkill", "danted"], capture_output=True)
