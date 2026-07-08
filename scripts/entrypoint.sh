@@ -11,6 +11,9 @@ API_TOKEN="${API_TOKEN:-$(openssl rand -hex 16)}"
 mkdir -p /dev/net /config/vpn
 [ ! -c /dev/net/tun ] && mknod /dev/net/tun c 10 200 && chmod 600 /dev/net/tun
 
+# Use public DNS (works through VPN tunnel)
+echo -e "nameserver 8.8.8.8\nnameserver 1.1.1.1" > /etc/resolv.conf
+
 useradd -r -s /bin/false "$SOCKS_USER" 2>/dev/null || true
 echo "$SOCKS_USER:$SOCKS_PASS" | chpasswd
 
