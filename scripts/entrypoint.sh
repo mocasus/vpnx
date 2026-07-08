@@ -4,7 +4,7 @@ set -e
 DEFAULT_IF=$(ip route show default 2>/dev/null | awk '{print $5}' | head -1)
 DEFAULT_IF=${DEFAULT_IF:-eth0}
 
-SOCKS_USER="vpx$(openssl rand -hex 4)"
+SOCKS_USER="vpnx$(openssl rand -hex 4)"
 SOCKS_PASS=$(openssl rand -hex 12)
 API_TOKEN="${API_TOKEN:-$(openssl rand -hex 16)}"
 
@@ -39,7 +39,7 @@ Port 8080
 Listen 0.0.0.0
 Timeout 30
 BasicAuth $SOCKS_USER $SOCKS_PASS
-ViaProxyName "vpx"
+ViaProxyName "vpnx"
 EOF
 
 cat > /config/credentials.json << EOF
@@ -47,7 +47,7 @@ cat > /config/credentials.json << EOF
 EOF
 
 echo "============================================"
-echo "  VPX - VPN Proxy Exchange v1.0.0"
+echo "  VPNX - VPN Proxy Exchange v1.0.0"
 echo "============================================"
 echo "API:    http://0.0.0.0:8000"
 echo "Token:  $API_TOKEN"

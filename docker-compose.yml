@@ -1,7 +1,7 @@
 services:
-  vpx:
+  vpnx:
     build: .
-    container_name: vpx
+    container_name: vpnx
     cap_add:
       - NET_ADMIN
     devices:

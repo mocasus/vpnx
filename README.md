@@ -1,13 +1,13 @@
 <div align="center">
 
-# VPX
+# VPNX
 
 **VPN Proxy Exchange**
 
 Self-hosted rotating VPN proxy in a single Docker container.
 Free public VPN servers → SOCKS5 + HTTP proxy → REST API control.
 
-[![Version](https://img.shields.io/badge/v1.0.0-blue?style=flat-square)](https://github.com/mocasus/vpx)
+[![Version](https://img.shields.io/badge/v1.0.0-blue?style=flat-square)](https://github.com/mocasus/vpnx)
 [![Docker](https://img.shields.io/badge/docker-ready-2496ED?style=flat-square&logo=docker&logoColor=white)]()
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
@@ -43,19 +43,19 @@ Free public VPN servers → SOCKS5 + HTTP proxy → REST API control.
     Your API client              Your proxy client
 ```
 
-VPX downloads free OpenVPN configs from [VPN Gate](https://www.vpngate.net), creates a VPN tunnel, and routes all proxy traffic through it. Rotate servers or switch countries via REST API — no VPN client needed on your machine.
+VPNX downloads free OpenVPN configs from [VPN Gate](https://www.vpngate.net), creates a VPN tunnel, and routes all proxy traffic through it. Rotate servers or switch countries via REST API — no VPN client needed on your machine.
 
 ## Quick Start
 
 ```bash
-docker run -d --name vpx \
+docker run -d --name vpnx \
   --cap-add=NET_ADMIN --device=/dev/net/tun \
   -p 1080:1080 -p 8080:8080 -p 8000:8000 \
   -e API_TOKEN=your-secret \
-  mocasus/vpx:latest
+  mocasus/vpnx:latest
 ```
 
-That's it. VPX is now running:
+That's it. VPNX is now running:
 - **SOCKS5 proxy** → `localhost:1080`
 - **HTTP proxy** → `localhost:8080`
 - **REST API** → `localhost:8000`
@@ -64,9 +64,9 @@ That's it. VPX is now running:
 
 | Method | Command |
 |--------|---------|
-| npm | `npm install -g vpx && vpx your-secret` |
-| pip | `pip install vpx && vpx your-secret` |
-| Docker Compose | `git clone https://github.com/mocasus/vpx && cd vpx && docker compose up -d` |
+| npm | `npm install -g vpnx && vpnx your-secret` |
+| pip | `pip install vpnx && vpnx your-secret` |
+| Docker Compose | `git clone https://github.com/mocasus/vpnx && cd vpnx && docker compose up -d` |
 
 The CLI wrapper generates a token, pulls the image, and starts the container with the right flags.
 
@@ -119,7 +119,7 @@ Works with any tool that supports SOCKS5 or HTTP proxies — browsers, scrapers,
 | Env Var | Default | Description |
 |---------|---------|-------------|
 | `API_TOKEN` | *(required)* | Bearer token for API authentication |
-| `SOCKS_USER` | `vpx<random>` | SOCKS5/HTTP proxy username |
+| `SOCKS_USER` | `vpnx<random>` | SOCKS5/HTTP proxy username |
 | `SOCKS_PASS` | `<random>` | SOCKS5/HTTP proxy password |
 
 ## Requirements
@@ -149,20 +149,20 @@ Unduh konfigurasi OpenVPN publik gratis (VPN Gate), arahkan lalu lintas melalui 
 ### Mulai Cepat
 
 ```bash
-docker run -d --name vpx \
+docker run -d --name vpnx \
   --cap-add=NET_ADMIN --device=/dev/net/tun \
   -p 1080:1080 -p 8080:8080 -p 8000:8000 \
   -e API_TOKEN=rahasia-anda \
-  mocasus/vpx:latest
+  mocasus/vpnx:latest
 ```
 
 ### Pemasangan
 
 | Metode | Perintah |
 |--------|----------|
-| npm | `npm install -g vpx && vpx rahasia-anda` |
-| pip | `pip install vpx && vpx rahasia-anda` |
-| Docker Compose | `git clone https://github.com/mocasus/vpx && cd vpx && docker compose up -d` |
+| npm | `npm install -g vpnx && vpnx rahasia-anda` |
+| pip | `pip install vpnx && vpnx rahasia-anda` |
+| Docker Compose | `git clone https://github.com/mocasus/vpnx && cd vpnx && docker compose up -d` |
 
 ### API
 
@@ -207,7 +207,7 @@ curl -x http://user:pass@localhost:8080 https://ifconfig.me
 | Env Var | Default | Keterangan |
 |---------|---------|------------|
 | `API_TOKEN` | *(wajib)* | Token Bearer untuk autentikasi API |
-| `SOCKS_USER` | `vpx<random>` | Username proxy SOCKS5/HTTP |
+| `SOCKS_USER` | `vpnx<random>` | Username proxy SOCKS5/HTTP |
 | `SOCKS_PASS` | `<random>` | Password proxy SOCKS5/HTTP |
 
 ### Kebutuhan Sistem

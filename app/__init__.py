@@ -1,1 +1,1 @@
-# VPX - VPN Proxy Exchange
+# VPNX - VPN Proxy Exchange

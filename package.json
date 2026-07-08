@@ -1,8 +1,8 @@
 {
-  "name": "vpx",
+  "name": "vpnx",
   "version": "1.0.0",
   "description": "VPN Proxy Exchange",
-  "bin": { "vpx": "./cli.js" },
+  "bin": { "vpnx": "./cli.js" },
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/mocasus/vpx" }
+  "repository": { "type": "git", "url": "https://github.com/mocasus/vpnx" }
 }
