@@ -80,6 +80,7 @@ class VPNManager:
             return {"status": "error", "error": "No servers available"}
         if self.connected:
             self.disconnect()
+            time.sleep(2)
         if idx is not None and idx < len(self.servers):
             server = self.servers[idx]
         elif country:
@@ -102,7 +103,7 @@ class VPNManager:
                  "--writepid", PID_FILE, "--log", "/tmp/openvpn.log"],
                 capture_output=True, timeout=5
             )
-            for _ in range(10):
+            for _ in range(20):
                 time.sleep(1)
                 if os.path.exists(PID_FILE):
                     with open(PID_FILE) as f:
