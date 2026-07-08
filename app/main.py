@@ -1,9 +1,21 @@
+import os
 from fastapi import FastAPI, HTTPException, Header, Query
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from app.vpn import VPNManager
 from app.proxy import ProxyManager
 from app.auth import get_api_token
 
-app = FastAPI(title="VPNX", version="2.0.0")
+app = FastAPI(title="VPNX", version="2.0.0", docs_url="/docs", redoc_url=None)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 vpn = VPNManager()
 proxy = ProxyManager()
 
@@ -57,3 +69,12 @@ async def locations(country: str = Query(None), authorization: str = Header(None
     if not vpn.servers:
         await vpn.fetch_servers()
     return vpn.get_locations(country)
+
+# Serve web dashboard
+WEB_DIR = os.path.join(os.path.dirname(__file__), "web")
+if os.path.isdir(WEB_DIR):
+    app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")
+
+    @app.get("/")
+    async def dashboard():
+        return FileResponse(os.path.join(WEB_DIR, "index.html"))
